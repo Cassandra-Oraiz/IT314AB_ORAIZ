@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -86,43 +88,98 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
+          mainAxisAlignment: .start,
           children: [
-            Text(
-              '🔥c\Cassandra Gayle R. Oraiz🔥',
-              style: TextStyle(
-                fontSize: 40.0,
-                color: Colors.teal.shade900,
-                fontWeight: FontWeight.bold,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 5),
+                  Text(
+                    '🔥Cassandra Gayle R. Oraiz🔥',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.teal.shade900,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
+                  Text(
+                    'BSIT III',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                  ),
+                  Text(
+                    'My First flutter Application',
+                    style: TextStyle(fontSize: 19),
+                  ),
+                  Row(
+                    mainAxisAlignment: .center,
+                    children: [Text('Age: 20(?)'), Text('August 11 2026')],
+                  ),
+                  Text(
+                    'Gaymer||Professional Larper||WLW MLM Enthusiast',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  SizedBox(height: 5),
+                  Image.asset('assets/67.jpg', height: 200, width: 200),
+                ], // Image.asset
               ),
             ),
-            Text('BSIT III'),
-            Text('My First flutter Application'),
-            Text('04/08/2026'),
-            Image.asset(
-              'assets/67.jpg',
-              height: 400,
-              width: 400,
-            ), // Image.asset
+
+            Divider(thickness: 2),
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('MY FAVORITES'),
+                  Row(
+                    children: [
+                      Text(
+                        'FAVORITE GAMES:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text('Mobile Legends, CRK, PJSK'),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: .start,
+                    children: [
+                      Text(
+                        'FAVORITE FOODS:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text('Palabok,Buttered Shrimp,Carbonara'),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'FAVORITE MOVIE:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text('3 Idiots'),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
