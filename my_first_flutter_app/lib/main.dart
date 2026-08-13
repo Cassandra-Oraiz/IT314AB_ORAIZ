@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:rainbow_text/rainbow_text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -123,8 +124,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     mainAxisAlignment: .center,
                     children: [Text('Age: 20(?)'), Text('August 11 2026')],
                   ),
-                  Text(
+                  RainbowText(
                     'Gaymer||Professional Larper||WLW MLM Enthusiast',
+                    colors: [Colors.red, Colors.blue, Colors.green],
                     style: TextStyle(fontStyle: FontStyle.italic),
                   ),
                   SizedBox(height: 5),
