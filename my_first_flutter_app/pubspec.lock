@@ -139,6 +139,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  rainbow_text:
+    dependency: "direct main"
+    description:
+      name: rainbow_text
+      sha256: "53e26891681372e777ea55daff0bc80962cfea05c068b41f175d0abe4f0168dc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
