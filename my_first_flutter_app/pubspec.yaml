@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  rainbow_text: ^0.0.1
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -53,6 +55,10 @@ dev_dependencies:
 flutter:
   assets:
     - assets/67.jpg
+    - assets/Ran.jpg
+    - assets/Me.jpg
+    - assets/PV.jpg
+    - assets/SMC.jpg
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

@@ -1,4 +1,7 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:rainbow_text/rainbow_text.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,22 +16,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: .fromSeed(
+          seedColor: const Color.fromARGB(255, 183, 58, 58),
+        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -38,15 +28,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -55,74 +36,434 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String name = '🔥Cassandra Gayle R. Oraiz🔥';
+  int age = 20;
+  String courseAndSection = 'BSIT III';
+  String hobby = 'Drawing, Gaming, Crochet';
+  String favoriteFoods = 'Palabok';
+  String favoriteMovie = 'Not Provided';
+  String favoriteGame = 'Null';
+  double height = 149.86;
+  bool isStudent = true;
+
+  String profileImage = 'assets/Me.jpg';
+
+  void toggleSwitch() {
+    setState(() {
+      isStudent = !isStudent;
+    });
+  }
+
+  String name1 = '☀️Pure Vanilla Cookie☀️';
+  int age1 = 20;
+  String courseAndSection1 = 'BSIT III';
+  String hobby1 = 'NULL';
+  double height1 = 6.0;
+  bool isStudent1 = true;
+
+  String profileImage1 = 'assets/PV.jpg';
+
+  void toggleSwitch1() {
+    setState(() {
+      isStudent = !isStudent;
+    });
+  }
+
+  String name2 = '🦉Rin Itoshi🦉';
+  int age2 = 22;
+  String courseAndSection2 = 'Missing';
+  String hobby2 = 'Not Provided';
+  double height2 = 6.0;
+  bool isStudent2 = true;
+
+  String profileImage2 = 'assets/67.jpg';
+
+  void toggleSwitch2() {
+    setState(() {
+      isStudent = !isStudent;
+    });
+  }
+
+  String name3 = '✨Theodosia "Ran" Agapov✨';
+  int age3 = 23;
+  String courseAndSection3 = 'BSIT III';
+  String hobby3 = 'Football, Hairstyling';
+  double height3 = 6.3;
+  bool isStudent3 = true;
+
+  String pfp3 = 'assets/Ran.jpg';
+
+  void toggleSwitch3() {
+    setState(() {
+      isStudent = !isStudent;
+    });
+  }
+
+  String name4 = 'EMPTY';
+  int age4 = 25;
+  String courseAndSection4 = 'BSIT III';
+  String hobby4 = 'Chismis';
+  double height4 = 6.0;
+  bool isStudent4 = false;
+
+  String profileImage4 = 'assets/SMC.jpg';
+
+  void toggleSwitch4() {
+    setState(() {
+      isStudent = !isStudent;
+    });
+  }
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Colors.red[900],
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
+
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: SingleChildScrollView(
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
+          mainAxisAlignment: .start,
           children: [
-            Text(
-              '🔥c\Cassandra Gayle R. Oraiz🔥',
-              style: TextStyle(
-                fontSize: 40.0,
-                color: Colors.teal.shade900,
-                fontWeight: FontWeight.bold,
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 5),
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.teal.shade900,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Text('Student: $isStudent'),
+
+                  SizedBox(height: 10),
+                  Text(
+                    courseAndSection,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                  ),
+                  Text(
+                    'My First flutter Application',
+                    style: TextStyle(fontSize: 19),
+                  ),
+                  Row(
+                    mainAxisAlignment: .center,
+                    children: [
+                      Text(age.toString()),
+
+                      SizedBox(width: 10),
+                      Text('August 11 2026'),
+
+                      SizedBox(width: 10),
+                      Text('Height:'),
+                      Text(height.toString()),
+                    ],
+                  ),
+                  RainbowText(
+                    hobby,
+                    colors: [Colors.red, Colors.blue, Colors.green],
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  SizedBox(height: 5),
+
+                  Image.asset(profileImage, height: 150, width: 150),
+                ], // Image.asset
               ),
             ),
-            Text('BSIT III'),
-            Text('My First flutter Application'),
-            Text('04/08/2026'),
-            Image.asset(
-              'assets/67.jpg',
-              height: 400,
-              width: 400,
-            ), // Image.asset
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 5),
+                  Text(
+                    name1,
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.teal.shade900,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Text('Student: $isStudent'),
+
+                  SizedBox(height: 10),
+                  Text(
+                    courseAndSection1,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                  ),
+                  Text(
+                    'My First flutter Application',
+                    style: TextStyle(fontSize: 19),
+                  ),
+                  Row(
+                    mainAxisAlignment: .center,
+                    children: [
+                      Text(age1.toString()),
+
+                      SizedBox(width: 10),
+                      Text('August 11 2026'),
+
+                      SizedBox(width: 10),
+                      Text('Height:'),
+                      Text(height1.toString()),
+                    ],
+                  ),
+                  RainbowText(
+                    hobby1,
+                    colors: [Colors.red],
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  SizedBox(height: 5),
+
+                  Image.asset(profileImage1, height: 150, width: 150),
+                ], // Image.asset
+              ),
+            ),
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 5),
+                  Text(
+                    name2,
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.teal.shade900,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Text('Student: $isStudent'),
+
+                  SizedBox(height: 10),
+                  Text(
+                    courseAndSection2,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                  ),
+                  Text(
+                    'My First flutter Application',
+                    style: TextStyle(fontSize: 19),
+                  ),
+                  Row(
+                    mainAxisAlignment: .center,
+                    children: [
+                      Text(age2.toString()),
+
+                      SizedBox(width: 10),
+                      Text('August 11 2026'),
+
+                      SizedBox(width: 10),
+                      Text('Height:'),
+                      Text(height2.toString()),
+                    ],
+                  ),
+                  RainbowText(
+                    hobby2,
+                    colors: [Colors.red, Colors.blue, Colors.green],
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  SizedBox(height: 5),
+
+                  Image.asset(profileImage2, height: 150, width: 150),
+                ], // Image.asset
+              ),
+            ),
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 5),
+                  Text(
+                    name3,
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.teal.shade900,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Text('Student: $isStudent'),
+
+                  SizedBox(height: 10),
+                  Text(
+                    courseAndSection3,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                  ),
+                  Text(
+                    'My First flutter Application',
+                    style: TextStyle(fontSize: 19),
+                  ),
+                  Row(
+                    mainAxisAlignment: .center,
+                    children: [
+                      Text(age3.toString()),
+
+                      SizedBox(width: 10),
+                      Text('August 11 2026'),
+
+                      SizedBox(width: 10),
+                      Text('Height:'),
+                      Text(height3.toString()),
+                    ],
+                  ),
+                  RainbowText(
+                    hobby3,
+                    colors: [Colors.red, Colors.blue, Colors.green],
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  SizedBox(height: 5),
+
+                  Image.asset(pfp3, height: 150, width: 150),
+                ], // Image.asset
+              ),
+            ),
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: 5),
+                  Text(
+                    name4,
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      color: Colors.teal.shade900,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Text('Student: $isStudent'),
+
+                  SizedBox(height: 10),
+                  Text(
+                    courseAndSection4,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                  ),
+                  Text(
+                    'My First flutter Application',
+                    style: TextStyle(fontSize: 19),
+                  ),
+                  Row(
+                    mainAxisAlignment: .center,
+                    children: [
+                      Text(age4.toString()),
+
+                      SizedBox(width: 10),
+                      Text('August 11 2026'),
+
+                      SizedBox(width: 10),
+                      Text('Height:'),
+                      Text(height4.toString()),
+                    ],
+                  ),
+                  RainbowText(
+                    hobby4,
+                    colors: [Colors.red, Colors.blue, Colors.green],
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
+                  SizedBox(height: 5),
+
+                  Image.asset(profileImage4, height: 150, width: 150),
+                ], // Image.asset
+              ),
+            ),
+
+            Divider(thickness: 2),
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.redAccent, width: 1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('MY FAVORITES'),
+                  Row(
+                    children: [
+                      Text(
+                        'FAVORITE GAMES:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(favoriteGame),
+                    ],
+                  ),
+                  Row(
+                    crossAxisAlignment: .start,
+                    children: [
+                      Text(
+                        'FAVORITE FOODS:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(favoriteFoods),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        'FAVORITE MOVIE:',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(favoriteMovie),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
