@@ -5,6 +5,7 @@ import 'package:rainbow_text/rainbow_text.dart';
 
 void main() {
   runApp(const MyApp());
+  students.sort((a, b) => a.name.compareTo(b.name));
 }
 
 class MyApp extends StatelessWidget {
@@ -25,6 +26,104 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class Student {
+  String images;
+  String name;
+  String course;
+  int yearLevel;
+  int age;
+  String hobby;
+  int ID;
+  String likes;
+  String house;
+
+  Student({
+    this.images = '',
+    this.name = '',
+    this.course = '',
+    this.yearLevel = 0,
+    this.age = 0,
+    this.hobby = '',
+    this.ID = 0,
+    this.likes = '',
+    this.house = '',
+  });
+}
+
+List<Student> students = [
+  Student(
+    ID: 1,
+    house: 'Ravenclaw',
+    likes: 'Wala',
+    name: 'Cassandra Gayle R. Oraiz',
+    age: 20,
+    course: 'BSIT',
+    yearLevel: 3,
+    hobby: 'Drawing, Gaming, Crochet',
+    images: 'assets/Me.jpg',
+  ),
+
+  Student(
+    ID: 2,
+    house: 'Hufflepuff',
+    likes: 'SMC',
+    name: 'Pure Vanilla Cookie',
+    age: 20,
+    course: 'BNA',
+    yearLevel: 4,
+    hobby: 'Gardening',
+    images: 'assets/PV.jpg',
+  ),
+
+  Student(
+    ID: 3,
+    house: 'Slytherin',
+    likes: 'Ran',
+    name: 'Rin Itoshi',
+    age: 22,
+    course: 'BSS',
+    yearLevel: 3,
+    hobby: 'Horror enthusiast',
+    images: 'assets/67.jpg',
+  ),
+
+  Student(
+    ID: 4,
+    house: 'Gryffindor',
+    likes: 'Rin',
+    name: 'Theodosia "Ran" Agapov',
+    age: 23,
+    course: 'BCS',
+    yearLevel: 3,
+    hobby: 'Football, Hairstyling',
+    images: 'assets/Ran.jpg',
+  ),
+
+  Student(
+    ID: 5,
+    house: 'Slytherin',
+    likes: 'In denial',
+    name: 'Shadow Milk Cookie',
+    age: 25,
+    course: 'BFA',
+    yearLevel: 4,
+    hobby: 'Chismis',
+    images: 'assets/SMC.jpg',
+  ),
+
+  Student(
+    ID: 6,
+    house: 'Gryffindor',
+    likes: 'Heheh',
+    name: 'Harry Potter',
+    age: 25,
+    course: 'IDK',
+    yearLevel: 4,
+    hobby: 'Quidditch',
+    images: 'assets/SMC.jpg',
+  ),
+];
+
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -35,89 +134,70 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  String name = '🔥Cassandra Gayle R. Oraiz🔥';
-  int age = 20;
-  String courseAndSection = 'BSIT III';
-  String hobby = 'Drawing, Gaming, Crochet';
-  String favoriteFoods = 'Palabok';
-  String favoriteMovie = 'Not Provided';
-  String favoriteGame = 'Null';
-  double height = 149.86;
-  bool isStudent = true;
+  Widget weBuildThings(Student student) {
+    return Card(
+      elevation: 4,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: Colors.redAccent, width: 1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(height: 5),
+          Text(
+            student.name,
+            style: TextStyle(
+              fontSize: 25.0,
+              color: Colors.teal.shade900,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
 
-  String profileImage = 'assets/Me.jpg';
+          Row(
+            mainAxisAlignment: .center,
+            children: [
+              Text(
+                student.course,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+              ),
+              SizedBox(width: 5),
+              Text(
+                student.yearLevel.toString(),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+              ),
+            ],
+          ),
 
-  void toggleSwitch() {
-    setState(() {
-      isStudent = !isStudent;
-    });
-  }
+          SizedBox(height: 5),
 
-  String name1 = '☀️Pure Vanilla Cookie☀️';
-  int age1 = 20;
-  String courseAndSection1 = 'BSIT III';
-  String hobby1 = 'NULL';
-  double height1 = 6.0;
-  bool isStudent1 = true;
+          Text('Likes: ${student.likes}'),
 
-  String profileImage1 = 'assets/PV.jpg';
+          SizedBox(height: 5),
 
-  void toggleSwitch1() {
-    setState(() {
-      isStudent = !isStudent;
-    });
-  }
+          Text(student.ID.toString()),
 
-  String name2 = '🦉Rin Itoshi🦉';
-  int age2 = 22;
-  String courseAndSection2 = 'Missing';
-  String hobby2 = 'Not Provided';
-  double height2 = 6.0;
-  bool isStudent2 = true;
+          SizedBox(height: 5),
 
-  String profileImage2 = 'assets/67.jpg';
+          Text(student.house),
 
-  void toggleSwitch2() {
-    setState(() {
-      isStudent = !isStudent;
-    });
-  }
+          SizedBox(height: 5),
 
-  String name3 = '✨Theodosia "Ran" Agapov✨';
-  int age3 = 23;
-  String courseAndSection3 = 'BSIT III';
-  String hobby3 = 'Football, Hairstyling';
-  double height3 = 6.3;
-  bool isStudent3 = true;
+          Row(
+            mainAxisAlignment: .center,
+            children: [Text(student.age.toString())],
+          ),
+          RainbowText(
+            student.hobby,
+            colors: [Colors.red, Colors.blue, Colors.green],
+            style: TextStyle(fontStyle: FontStyle.italic),
+          ),
+          SizedBox(height: 5),
 
-  String pfp3 = 'assets/Ran.jpg';
-
-  void toggleSwitch3() {
-    setState(() {
-      isStudent = !isStudent;
-    });
-  }
-
-  String name4 = 'EMPTY';
-  int age4 = 25;
-  String courseAndSection4 = 'BSIT III';
-  String hobby4 = 'Chismis';
-  double height4 = 6.0;
-  bool isStudent4 = false;
-
-  String profileImage4 = 'assets/SMC.jpg';
-
-  void toggleSwitch4() {
-    setState(() {
-      isStudent = !isStudent;
-    });
-  }
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+          Image.asset(student.images, height: 150, width: 150),
+        ],
+      ),
+    );
   }
 
   @override
@@ -128,347 +208,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
         title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: .start,
-          children: [
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.redAccent, width: 1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 5),
-                  Text(
-                    name,
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.teal.shade900,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  SizedBox(height: 10),
-
-                  Text('Student: $isStudent'),
-
-                  SizedBox(height: 10),
-                  Text(
-                    courseAndSection,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                  ),
-                  Text(
-                    'My First flutter Application',
-                    style: TextStyle(fontSize: 19),
-                  ),
-                  Row(
-                    mainAxisAlignment: .center,
-                    children: [
-                      Text(age.toString()),
-
-                      SizedBox(width: 10),
-                      Text('August 11 2026'),
-
-                      SizedBox(width: 10),
-                      Text('Height:'),
-                      Text(height.toString()),
-                    ],
-                  ),
-                  RainbowText(
-                    hobby,
-                    colors: [Colors.red, Colors.blue, Colors.green],
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                  SizedBox(height: 5),
-
-                  Image.asset(profileImage, height: 150, width: 150),
-                ], // Image.asset
-              ),
+      body: students.isEmpty
+          ? Center(child: Text('No students here :P'))
+          : ListView.builder(
+              itemCount: students.length,
+              itemBuilder: (context, index) {
+                return weBuildThings(students[index]);
+              },
             ),
-
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.redAccent, width: 1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 5),
-                  Text(
-                    name1,
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.teal.shade900,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  SizedBox(height: 10),
-
-                  Text('Student: $isStudent'),
-
-                  SizedBox(height: 10),
-                  Text(
-                    courseAndSection1,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                  ),
-                  Text(
-                    'My First flutter Application',
-                    style: TextStyle(fontSize: 19),
-                  ),
-                  Row(
-                    mainAxisAlignment: .center,
-                    children: [
-                      Text(age1.toString()),
-
-                      SizedBox(width: 10),
-                      Text('August 11 2026'),
-
-                      SizedBox(width: 10),
-                      Text('Height:'),
-                      Text(height1.toString()),
-                    ],
-                  ),
-                  RainbowText(
-                    hobby1,
-                    colors: [Colors.red],
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                  SizedBox(height: 5),
-
-                  Image.asset(profileImage1, height: 150, width: 150),
-                ], // Image.asset
-              ),
-            ),
-
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.redAccent, width: 1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 5),
-                  Text(
-                    name2,
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.teal.shade900,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  SizedBox(height: 10),
-
-                  Text('Student: $isStudent'),
-
-                  SizedBox(height: 10),
-                  Text(
-                    courseAndSection2,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                  ),
-                  Text(
-                    'My First flutter Application',
-                    style: TextStyle(fontSize: 19),
-                  ),
-                  Row(
-                    mainAxisAlignment: .center,
-                    children: [
-                      Text(age2.toString()),
-
-                      SizedBox(width: 10),
-                      Text('August 11 2026'),
-
-                      SizedBox(width: 10),
-                      Text('Height:'),
-                      Text(height2.toString()),
-                    ],
-                  ),
-                  RainbowText(
-                    hobby2,
-                    colors: [Colors.red, Colors.blue, Colors.green],
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                  SizedBox(height: 5),
-
-                  Image.asset(profileImage2, height: 150, width: 150),
-                ], // Image.asset
-              ),
-            ),
-
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.redAccent, width: 1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 5),
-                  Text(
-                    name3,
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.teal.shade900,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  SizedBox(height: 10),
-
-                  Text('Student: $isStudent'),
-
-                  SizedBox(height: 10),
-                  Text(
-                    courseAndSection3,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                  ),
-                  Text(
-                    'My First flutter Application',
-                    style: TextStyle(fontSize: 19),
-                  ),
-                  Row(
-                    mainAxisAlignment: .center,
-                    children: [
-                      Text(age3.toString()),
-
-                      SizedBox(width: 10),
-                      Text('August 11 2026'),
-
-                      SizedBox(width: 10),
-                      Text('Height:'),
-                      Text(height3.toString()),
-                    ],
-                  ),
-                  RainbowText(
-                    hobby3,
-                    colors: [Colors.red, Colors.blue, Colors.green],
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                  SizedBox(height: 5),
-
-                  Image.asset(pfp3, height: 150, width: 150),
-                ], // Image.asset
-              ),
-            ),
-
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.redAccent, width: 1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 5),
-                  Text(
-                    name4,
-                    style: TextStyle(
-                      fontSize: 25.0,
-                      color: Colors.teal.shade900,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  SizedBox(height: 10),
-
-                  Text('Student: $isStudent'),
-
-                  SizedBox(height: 10),
-                  Text(
-                    courseAndSection4,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                  ),
-                  Text(
-                    'My First flutter Application',
-                    style: TextStyle(fontSize: 19),
-                  ),
-                  Row(
-                    mainAxisAlignment: .center,
-                    children: [
-                      Text(age4.toString()),
-
-                      SizedBox(width: 10),
-                      Text('August 11 2026'),
-
-                      SizedBox(width: 10),
-                      Text('Height:'),
-                      Text(height4.toString()),
-                    ],
-                  ),
-                  RainbowText(
-                    hobby4,
-                    colors: [Colors.red, Colors.blue, Colors.green],
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-                  SizedBox(height: 5),
-
-                  Image.asset(profileImage4, height: 150, width: 150),
-                ], // Image.asset
-              ),
-            ),
-
-            Divider(thickness: 2),
-
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                side: BorderSide(color: Colors.redAccent, width: 1),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('MY FAVORITES'),
-                  Row(
-                    children: [
-                      Text(
-                        'FAVORITE GAMES:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(favoriteGame),
-                    ],
-                  ),
-                  Row(
-                    crossAxisAlignment: .start,
-                    children: [
-                      Text(
-                        'FAVORITE FOODS:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(favoriteFoods),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'FAVORITE MOVIE:',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      Text(favoriteMovie),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 }
