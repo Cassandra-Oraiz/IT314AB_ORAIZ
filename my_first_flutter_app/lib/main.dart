@@ -36,6 +36,7 @@ class Student {
   int ID;
   String likes;
   String house;
+  bool fav;
 
   Student({
     this.images = '',
@@ -47,11 +48,13 @@ class Student {
     this.ID = 0,
     this.likes = '',
     this.house = '',
+    this.fav = false,
   });
 }
 
 List<Student> students = [
   Student(
+    fav: false,
     ID: 1,
     house: 'Ravenclaw',
     likes: 'Wala',
@@ -64,6 +67,7 @@ List<Student> students = [
   ),
 
   Student(
+    fav: false,
     ID: 2,
     house: 'Hufflepuff',
     likes: 'SMC',
@@ -76,6 +80,7 @@ List<Student> students = [
   ),
 
   Student(
+    fav: false,
     ID: 3,
     house: 'Slytherin',
     likes: 'Ran',
@@ -88,6 +93,7 @@ List<Student> students = [
   ),
 
   Student(
+    fav: false,
     ID: 4,
     house: 'Gryffindor',
     likes: 'Rin',
@@ -100,6 +106,7 @@ List<Student> students = [
   ),
 
   Student(
+    fav: false,
     ID: 5,
     house: 'Slytherin',
     likes: 'In denial',
@@ -112,6 +119,7 @@ List<Student> students = [
   ),
 
   Student(
+    fav: false,
     ID: 6,
     house: 'Gryffindor',
     likes: 'Heheh',
@@ -135,67 +143,111 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Widget weBuildThings(Student student) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        side: BorderSide(color: Colors.redAccent, width: 1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(height: 5),
-          Text(
-            student.name,
-            style: TextStyle(
-              fontSize: 25.0,
-              color: Colors.teal.shade900,
-              fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: () {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('HEY!')));
+      },
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(color: Colors.redAccent, width: 1),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: 5),
+            Text(
+              student.name,
+              style: TextStyle(
+                fontSize: 25.0,
+                color: Colors.teal.shade900,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
 
-          Row(
-            mainAxisAlignment: .center,
-            children: [
-              Text(
-                student.course,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-              ),
-              SizedBox(width: 5),
-              Text(
-                student.yearLevel.toString(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-              ),
-            ],
-          ),
+            Row(
+              mainAxisAlignment: .center,
+              children: [
+                Text(
+                  student.course,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                ),
+                SizedBox(width: 5),
+                Text(
+                  student.yearLevel.toString(),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                ),
+              ],
+            ),
 
-          SizedBox(height: 5),
+            SizedBox(height: 5),
 
-          Text('Likes: ${student.likes}'),
+            Text('Likes: ${student.likes}'),
 
-          SizedBox(height: 5),
+            SizedBox(height: 5),
 
-          Text(student.ID.toString()),
+            Text(student.ID.toString()),
 
-          SizedBox(height: 5),
+            SizedBox(height: 5),
 
-          Text(student.house),
+            Text(student.house),
 
-          SizedBox(height: 5),
+            SizedBox(height: 5),
 
-          Row(
-            mainAxisAlignment: .center,
-            children: [Text(student.age.toString())],
-          ),
-          RainbowText(
-            student.hobby,
-            colors: [Colors.red, Colors.blue, Colors.green],
-            style: TextStyle(fontStyle: FontStyle.italic),
-          ),
-          SizedBox(height: 5),
+            Row(
+              mainAxisAlignment: .center,
+              children: [Text(student.age.toString())],
+            ),
+            RainbowText(
+              student.hobby,
+              colors: [Colors.red, Colors.blue, Colors.green],
+              style: TextStyle(fontStyle: FontStyle.italic),
+            ),
+            SizedBox(height: 5),
 
-          Image.asset(student.images, height: 150, width: 150),
-        ],
+            Image.asset(student.images, height: 150, width: 150),
+
+            Row(
+              mainAxisAlignment: .center,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      students.remove(student);
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Button was pressed!')),
+                    );
+                  },
+                  child: Text('Delete'),
+                ),
+
+                SizedBox(width: 5),
+
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      student.fav = !student.fav;
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('You are MY favorite')),
+                    );
+                  },
+                  child: student.fav
+                      ? Icon(Icons.favorite, color: Colors.red)
+                      : Icon(Icons.favorite_border),
+                ),
+
+                SizedBox(width: 5),
+              ],
+            ),
+
+            SizedBox(height: 5),
+          ],
+        ),
       ),
     );
   }
