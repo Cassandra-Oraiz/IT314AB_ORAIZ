@@ -242,6 +242,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
 
                 SizedBox(width: 5),
+
+                ElevatedButton(
+                  onPressed: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('EDITTING STUDENTS')),
+                    );
+                  },
+                  child: Text('Edit'),
+                ),
+
+                SizedBox(width: 5),
               ],
             ),
 
