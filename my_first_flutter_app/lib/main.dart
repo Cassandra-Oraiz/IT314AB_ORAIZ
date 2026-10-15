@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:rainbow_text/rainbow_text.dart';
 
 void main() {
-  runApp(const MyApp());
   students.sort((a, b) => a.name.compareTo(b.name));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -37,6 +37,7 @@ class Student {
   String likes;
   String house;
   bool fav;
+  bool isActive;
 
   Student({
     this.images = '',
@@ -49,88 +50,99 @@ class Student {
     this.likes = '',
     this.house = '',
     this.fav = false,
+    this.isActive = true,
   });
 }
 
-List<Student> students = [
-  Student(
-    fav: false,
-    ID: 1,
-    house: 'Ravenclaw',
-    likes: 'Wala',
-    name: 'Cassandra Gayle R. Oraiz',
-    age: 20,
-    course: 'BSIT',
-    yearLevel: 3,
-    hobby: 'Drawing, Gaming, Crochet',
-    images: 'assets/Me.jpg',
-  ),
+List<Student> createStudent() {
+  return [
+    Student(
+      fav: false,
+      isActive: true,
+      ID: 1,
+      house: 'Ravenclaw',
+      likes: 'Wala',
+      name: 'Cassandra Gayle R. Oraiz',
+      age: 20,
+      course: 'BSIT',
+      yearLevel: 3,
+      hobby: 'Drawing, Gaming, Crochet',
+      images: 'assets/Me.jpg',
+    ),
 
-  Student(
-    fav: false,
-    ID: 2,
-    house: 'Hufflepuff',
-    likes: 'SMC',
-    name: 'Pure Vanilla Cookie',
-    age: 20,
-    course: 'BNA',
-    yearLevel: 4,
-    hobby: 'Gardening',
-    images: 'assets/PV.jpg',
-  ),
+    Student(
+      fav: false,
+      isActive: true,
+      ID: 2,
+      house: 'Hufflepuff',
+      likes: 'SMC',
+      name: 'Pure Vanilla Cookie',
+      age: 20,
+      course: 'BNA',
+      yearLevel: 4,
+      hobby: 'Gardening',
+      images: 'assets/PV.jpg',
+    ),
 
-  Student(
-    fav: false,
-    ID: 3,
-    house: 'Slytherin',
-    likes: 'Ran',
-    name: 'Rin Itoshi',
-    age: 22,
-    course: 'BSS',
-    yearLevel: 3,
-    hobby: 'Horror enthusiast',
-    images: 'assets/67.jpg',
-  ),
+    Student(
+      fav: false,
+      isActive: false,
+      ID: 3,
+      house: 'Slytherin',
+      likes: 'Ran',
+      name: 'Rin Itoshi',
+      age: 22,
+      course: 'BSS',
+      yearLevel: 3,
+      hobby: 'Horror enthusiast',
+      images: 'assets/67.jpg',
+    ),
 
-  Student(
-    fav: false,
-    ID: 4,
-    house: 'Gryffindor',
-    likes: 'Rin',
-    name: 'Theodosia "Ran" Agapov',
-    age: 23,
-    course: 'BCS',
-    yearLevel: 3,
-    hobby: 'Football, Hairstyling',
-    images: 'assets/Ran.jpg',
-  ),
+    Student(
+      fav: false,
+      isActive: true,
+      ID: 4,
+      house: 'Gryffindor',
+      likes: 'Rin',
+      name: 'Theodosia "Ran" Agapov',
+      age: 23,
+      course: 'BCS',
+      yearLevel: 3,
+      hobby: 'Football, Hairstyling',
+      images: 'assets/Ran.jpg',
+    ),
 
-  Student(
-    fav: false,
-    ID: 5,
-    house: 'Slytherin',
-    likes: 'In denial',
-    name: 'Shadow Milk Cookie',
-    age: 25,
-    course: 'BFA',
-    yearLevel: 4,
-    hobby: 'Chismis',
-    images: 'assets/SMC.jpg',
-  ),
+    Student(
+      fav: false,
+      isActive: false,
+      ID: 5,
+      house: 'Slytherin',
+      likes: 'In denial',
+      name: 'Shadow Milk Cookie',
+      age: 25,
+      course: 'BFA',
+      yearLevel: 4,
+      hobby: 'Chismis',
+      images: 'assets/SMC.jpg',
+    ),
 
-  Student(
-    fav: false,
-    ID: 6,
-    house: 'Gryffindor',
-    likes: 'Heheh',
-    name: 'Harry Potter',
-    age: 25,
-    course: 'IDK',
-    yearLevel: 4,
-    hobby: 'Quidditch',
-    images: 'assets/SMC.jpg',
-  ),
-];
+    Student(
+      fav: false,
+      isActive: false,
+      ID: 6,
+      house: 'Gryffindor',
+      likes: 'Heheh',
+      name: 'Harry Potter',
+      age: 25,
+      course: 'IDK',
+      yearLevel: 4,
+      hobby: 'Quidditch',
+      images: 'assets/SMC.jpg',
+    ),
+  ];
+}
+
+List<Student> students = createStudent();
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -142,6 +154,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(Duration(seconds: 2), () {
+      if (!mounted) return;
+
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Loading Successful!')));
+    });
+  }
+
   Widget weBuildThings(Student student) {
     return GestureDetector(
       onTap: () {
@@ -159,14 +189,32 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(height: 5),
-            Text(
-              student.name,
-              style: TextStyle(
-                fontSize: 25.0,
-                color: Colors.teal.shade900,
-                fontWeight: FontWeight.bold,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  student.name,
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    color: Colors.teal.shade900,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                student.fav
+                    ? Icon(Icons.star, color: Colors.amber)
+                    : SizedBox.shrink(),
+              ],
             ),
+
+            student.isActive
+                ? Text(
+                    'Active',
+                    style: TextStyle(color: Color.fromARGB(255, 14, 199, 39)),
+                  )
+                : Text(
+                    'Offline',
+                    style: TextStyle(color: Color.fromARGB(255, 158, 148, 148)),
+                  ),
 
             Row(
               mainAxisAlignment: .center,
@@ -271,8 +319,35 @@ class _MyHomePageState extends State<MyHomePage> {
 
         title: Text(widget.title),
       ),
-      body: students.isEmpty
-          ? Center(child: Text('No students here :P'))
+      body: isLoading
+          ? Center(
+              child: CircularProgressIndicator(
+                value: 0.7,
+                color: Colors.green,
+                backgroundColor: Colors.grey[200],
+                strokeWidth: 6.0,
+              ),
+            )
+          : students.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('No students here :P'),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        students = createStudent();
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Student Restored')),
+                      );
+                    },
+                    child: Text('Restore'),
+                  ),
+                ],
+              ),
+            )
           : ListView.builder(
               itemCount: students.length,
               itemBuilder: (context, index) {
