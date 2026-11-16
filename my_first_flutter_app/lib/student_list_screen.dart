@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rainbow_text/rainbow_text.dart';
-import 'student_details.dart';
+import 'student.dart';
 import 'main.dart';
-import 'add_student_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -113,9 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontStyle: FontStyle.italic),
             ),
             SizedBox(height: 5),
-
-            Image.asset(student.images, height: 150, width: 150),
-
+            student.images.isNotEmpty
+                ? Image.asset(student.images, height: 150, width: 150)
+                : const Icon(Icons.person, size: 50),
             Row(
               mainAxisAlignment: .center,
               children: [
@@ -179,8 +178,16 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, '/add-student');
+        onPressed: () async {
+          final result = await Navigator.pushNamed(context, '/add-student');
+
+          if (result == true) {
+            setState(() {});
+
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('New student successfully added!')),
+            );
+          }
         },
         backgroundColor: Colors.green,
         child: Icon(Icons.add),

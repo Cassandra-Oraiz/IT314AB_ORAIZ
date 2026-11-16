@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+import 'student.dart';
 
 class SecondRoute extends StatefulWidget {
   final Student student;
@@ -113,7 +113,7 @@ class _SecondRouteState extends State<SecondRoute> {
                                 SizedBox(height: 20),
 
                                 ElevatedButton(
-                                  onPressed: () {
+                                  onPressed: () async {
                                     setState(() {
                                       widget.student.name = nameController.text;
                                       widget.student.course =
@@ -126,6 +126,8 @@ class _SecondRouteState extends State<SecondRoute> {
                                       widget.student.house =
                                           houseController.text;
                                     });
+
+                                    await saveStudents(students);
 
                                     Navigator.pop(context);
                                   },
