@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rainbow_text/rainbow_text.dart';
 import 'student.dart';
-import 'main.dart';
+import 'repositories/student_repository.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
@@ -13,155 +12,157 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final StudentRepository repository = StudentRepository();
+
+  List<Student> students = [];
+
   bool isLoading = true;
+  String? errorMessage;
 
   @override
   void initState() {
     super.initState();
+    loadStudents();
+  }
 
-    Future.delayed(Duration(seconds: 2), () {
+  Future<void> loadStudents() async {
+    setState(() {
+      isLoading = true;
+      errorMessage = null;
+    });
+
+    try {
+      final result = await repository.getStudents();
+
       if (!mounted) return;
 
       setState(() {
+        students = result;
         isLoading = false;
       });
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Loading Successful!')));
-    });
+    } catch (e) {
+      if (!mounted) return;
+
+      setState(() {
+        errorMessage = e.toString();
+        isLoading = false;
+      });
+    }
   }
 
-  Widget weBuildThings(Student student) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/student-details', arguments: student);
-      },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(color: Colors.redAccent, width: 1),
-          borderRadius: BorderRadius.circular(12),
-        ),
+  Future<void> deleteStudent(Student student) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Student'),
+        content: Text('Are you sure you want to delete ${student.fullName}?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
+    try {
+      await repository.deleteStudent(student.studentId);
+
+      if (!mounted) return;
+
+      setState(() {
+        students.removeWhere((item) => item.studentId == student.studentId);
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Student deleted successfully!')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Delete failed: $e')));
+    }
+  }
+
+  Widget buildStudentCard(Student student) {
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+        side: const BorderSide(color: Colors.redAccent, width: 1),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 5),
+            Text(
+              student.fullName,
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Colors.teal.shade900,
+              ),
+            ),
+
+            const SizedBox(height: 8),
+
+            Text('Student ID: ${student.studentId}'),
+            Text('Student Number: ${student.studentNumber}'),
+            Text('Email: ${student.email}'),
+            Text('Contact: ${student.contactNumber}'),
+
+            const SizedBox(height: 8),
+
+            Text(
+              student.course,
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+
+            Text('Year Level: ${student.yearLevel}'),
+            Text('Program ID: ${student.programId}'),
+
+            const SizedBox(height: 12),
+
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(
-                  student.name,
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    color: Colors.teal.shade900,
-                    fontWeight: FontWeight.bold,
+                ElevatedButton(
+                  onPressed: () async {
+                    final result = await Navigator.pushNamed(
+                      context,
+                      '/student-details',
+                      arguments: student,
+                    );
+
+                    if (result == true) {
+                      loadStudents();
+                    }
+                  },
+                  child: const Text('View Details'),
+                ),
+
+                const SizedBox(width: 8),
+
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                    foregroundColor: Colors.white,
                   ),
-                ),
-                student.fav
-                    ? Icon(Icons.star, color: Colors.amber)
-                    : SizedBox.shrink(),
-              ],
-            ),
-
-            student.isActive
-                ? Text(
-                    'Active',
-                    style: TextStyle(color: Color.fromARGB(255, 14, 199, 39)),
-                  )
-                : Text(
-                    'Offline',
-                    style: TextStyle(color: Color.fromARGB(255, 158, 148, 148)),
-                  ),
-
-            Row(
-              mainAxisAlignment: .center,
-              children: [
-                Text(
-                  student.course,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
-                ),
-                SizedBox(width: 5),
-                Text(
-                  student.yearLevel.toString(),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19),
+                  onPressed: () => deleteStudent(student),
+                  child: const Text('Delete'),
                 ),
               ],
             ),
-
-            SizedBox(height: 5),
-
-            Text('Likes: ${student.likes}'),
-
-            SizedBox(height: 5),
-
-            Text(student.id.toString()),
-
-            SizedBox(height: 5),
-
-            Text(student.house),
-
-            SizedBox(height: 5),
-
-            Row(
-              mainAxisAlignment: .center,
-              children: [Text(student.age.toString())],
-            ),
-            RainbowText(
-              student.hobby,
-              colors: [Colors.red, Colors.blue, Colors.green],
-              style: TextStyle(fontStyle: FontStyle.italic),
-            ),
-            SizedBox(height: 5),
-            student.images.isNotEmpty
-                ? Image.asset(student.images, height: 150, width: 150)
-                : const Icon(Icons.person, size: 50),
-            Row(
-              mainAxisAlignment: .center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      students.remove(student);
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Button was pressed!')),
-                    );
-                  },
-                  child: Text('Delete'),
-                ),
-
-                SizedBox(width: 5),
-
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      student.fav = !student.fav;
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('You are MY favorite')),
-                    );
-                  },
-                  child: student.fav
-                      ? Icon(Icons.favorite, color: Colors.red)
-                      : Icon(Icons.favorite_border),
-                ),
-
-                SizedBox(width: 5),
-
-                ElevatedButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('EDITTING STUDENTS')),
-                    );
-                  },
-                  child: Text('Edit'),
-                ),
-
-                SizedBox(width: 5),
-              ],
-            ),
-
-            SizedBox(height: 5),
           ],
         ),
       ),
@@ -173,60 +174,114 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.red[900],
-
+        foregroundColor: Colors.white,
         title: Text(widget.title),
-      ),
 
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/subject-list');
+            },
+            icon: const Icon(Icons.menu_book),
+            tooltip: 'View Subjects',
+          ),
+
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/schedule-list');
+            },
+            icon: const Icon(
+              Icons.calendar_month,
+              color: Colors.white,
+              size: 30,
+            ),
+            tooltip: 'View Schedules',
+          ),
+
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/enrollment-list');
+            },
+            icon: const Icon(
+              Icons.assignment_ind,
+              color: Colors.white,
+              size: 28,
+            ),
+            tooltip: 'View Enrollments',
+          ),
+
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/grade-list');
+            },
+            icon: const Icon(Icons.grade, color: Colors.white, size: 28),
+            tooltip: 'View Grades',
+          ),
+
+          IconButton(
+            onPressed: loadStudents,
+            icon: const Icon(Icons.refresh),
+            tooltip: 'Refresh students',
+          ),
+        ],
+      ),
+      //ADD/ENROLLMENT STUDENTS BUTTON
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
         onPressed: () async {
           final result = await Navigator.pushNamed(context, '/add-student');
 
           if (result == true) {
-            setState(() {});
-
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('New student successfully added!')),
-            );
+            loadStudents();
           }
         },
-        backgroundColor: Colors.green,
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
 
       body: isLoading
+          ? const Center(child: CircularProgressIndicator(color: Colors.green))
+          : errorMessage != null
           ? Center(
-              child: CircularProgressIndicator(
-                value: 0.7,
-                color: Colors.green,
-                backgroundColor: Colors.grey[200],
-                strokeWidth: 6.0,
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      size: 50,
+                      color: Colors.red,
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Unable to load students.',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Text(errorMessage!),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: loadStudents,
+                      child: const Text('Try Again'),
+                    ),
+                  ],
+                ),
               ),
             )
           : students.isEmpty
-          ? Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text('No students here :P'),
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        students = createStudent();
-                      });
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Student Restored')),
-                      );
-                    },
-                    child: Text('Restore'),
-                  ),
-                ],
+          ? const Center(
+              child: Text(
+                'No students found in Neon.',
+                style: TextStyle(fontSize: 18),
               ),
             )
-          : ListView.builder(
-              itemCount: students.length,
-              itemBuilder: (context, index) {
-                return weBuildThings(students[index]);
-              },
+          : RefreshIndicator(
+              onRefresh: loadStudents,
+              child: ListView.builder(
+                itemCount: students.length,
+                itemBuilder: (context, index) {
+                  return buildStudentCard(students[index]);
+                },
+              ),
             ),
     );
   }
